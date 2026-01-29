@@ -8,11 +8,20 @@ import { areUrlsEquivalent } from '#shared/utils/url'
 
 definePageMeta({
   name: 'package',
+  alias: ['/package/:package(.*)*'],
 })
 
 const router = useRouter()
 
-const { packageName, requestedVersion, orgName } = usePackageRoute()
+const { packageName, requestedVersion } = usePackageRoute()
+
+const orgName = computed(() => {
+  const name = packageName.value
+  if (!name.startsWith('@')) return null
+
+  const match = name.match(/^@([^/]+)\//)
+  return match ? match[1] : null
+})
 
 if (import.meta.server) {
   assertValidPackageName(packageName.value)
@@ -471,7 +480,7 @@ defineOgImageComponent('Package', {
 
               <NuxtLink
                 v-if="resolvedVersion !== requestedVersion"
-                :to="`/${pkg.name}/v/${displayVersion.version}`"
+                :to="getPackageRoute(pkg.name, displayVersion.version)"
                 :title="$t('package.view_permalink')"
                 >{{ displayVersion.version }}</NuxtLink
               >
@@ -992,7 +1001,7 @@ defineOgImageComponent('Package', {
                 >
                 <NuxtLink
                   v-if="typesPackageName"
-                  :to="`/${typesPackageName}`"
+                  :to="getPackageRoute(typesPackageName)"
                   class="text-fg-subtle hover:text-fg-muted text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg/50 rounded"
                   :title="$t('package.get_started.view_types', { package: typesPackageName })"
                 >
@@ -1076,7 +1085,7 @@ defineOgImageComponent('Package', {
                     }}</span>
                   </button>
                   <NuxtLink
-                    :to="`/${createPackageInfo.packageName}`"
+                    :to="getPackageRoute(createPackageInfo.packageName)"
                     class="text-fg-subtle hover:text-fg-muted text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fg/50 rounded"
                     :title="`View ${createPackageInfo.packageName}`"
                   >

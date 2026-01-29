@@ -6,19 +6,12 @@
  * @returns Route object with name and params
  */
 export function getPackageRoute(pkg: string, version: string | null = null) {
-  const [org, name] = pkg.startsWith('@') ? pkg.split('/') : [null, pkg]
-  if (version) {
-    return {
-      name: 'package-version',
-      params: { org, name, version },
-    } as const
-  }
-
   return {
     name: 'package',
     params: {
-      org,
-      name,
+      package: [...pkg.split('/'), version ? 'v' : null, version].filter(
+        (a): a is NonNullable<typeof a> => !!a,
+      ),
     },
   } as const
 }
@@ -36,17 +29,39 @@ export function getPackageRoute(pkg: string, version: string | null = null) {
  * @public
  */
 export function usePackageRoute() {
-  const route = useRoute('package-version')
+  const route = useRoute('package')
 
-  const orgName = computed(() => route.params.org)
-  const requestedVersion = computed(() => route.params.version || null)
-  const packageName = computed(() =>
-    orgName.value ? `${orgName.value}/${route.params.name}` : route.params.name,
-  )
+  const data = computed(() => {
+    const segments = route.params.package || []
+
+    // Find the /v/ separator for version
+    const vIndex = segments.indexOf('v')
+    if (vIndex !== -1 && vIndex < segments.length - 1) {
+      return {
+        packageName: segments.slice(0, vIndex).join('/'),
+        requestedVersion: segments.slice(vIndex + 1).join('/'),
+      }
+    }
+
+    // Parse @ versioned package
+    const fullPath = segments.join('/')
+    const versionMatch = fullPath.match(/^(@[^/]+\/[^/]+|[^/]+)@([^/]+)$/)
+    if (versionMatch) {
+      const [, packageName, requestedVersion] = versionMatch as [string, string, string]
+      return {
+        packageName,
+        requestedVersion,
+      }
+    }
+
+    return {
+      packageName: fullPath,
+      requestedVersion: null as string | null,
+    }
+  })
 
   return {
-    packageName,
-    requestedVersion,
-    orgName,
+    packageName: computed(() => data.value.packageName),
+    requestedVersion: computed(() => data.value.requestedVersion),
   }
 }
