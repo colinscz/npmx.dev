@@ -1,4 +1,5 @@
 ---
+author: 'Daniel Roe'
 title: 'Server Components'
 date: '2026-01-28'
 slug: 'server-components'

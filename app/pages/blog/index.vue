@@ -1,7 +1,17 @@
 <script setup lang="ts">
-const { data: posts } = await useAsyncData('blog-posts', () =>
-  queryCollection('blog').where('draft', '<>', true).order('date', 'DESC').all(),
-)
+import type { BlogPostFrontmatter } from '#shared/schemas/blog'
+
+const blogModules = import.meta.glob<BlogPostFrontmatter>('./*.md', { eager: true })
+
+const posts: BlogPostFrontmatter[] = []
+
+for (const [path, module] of Object.entries(blogModules)) {
+  if (module.draft) continue
+
+  posts.push({ ...module })
+}
+
+posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
 const placeHolder = ['atproto', 'nuxt']
 
