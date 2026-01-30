@@ -7,7 +7,7 @@
 ## Current
 
 - Blog list UI - fix posts width
-- Blog post UI
+- Blog post UI - (Started - needs more polish)
 - OAuth
 - Standard site push - Mock PDS push for now
 - anthony's alternative markdown solution for now and Nuxt content integration for later
@@ -23,7 +23,7 @@
 ## Completed
 
 - [x] Lexicons
-- [x] x
+- [x] Prose-styling using unocss typography
 - [x] x
 
 ---

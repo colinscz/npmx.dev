@@ -22,7 +22,7 @@ useSeoMeta({
       <div class="">I AM A WEAK HEADER</div>
     </header>
 
-    <article v-if="post">
+    <article v-if="post" class="mx-auto text-base prose dark:prose-invert text-lg">
       <ContentRenderer v-if="post" :value="post" />
     </article>
 
