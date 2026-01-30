@@ -19,7 +19,12 @@ useSeoMeta({
   <main class="container py-8 sm:py-12 w-full">
     <!-- Header -->
     <header class="mb-8 pb-8 border-b border-border">
-      <div class="">I AM A WEAK HEADER</div>
+      <h2
+        v-if="post"
+        class="font-mono text-base font-medium text-fg group-hover:text-primary transition-colors hover:underline"
+      >
+        {{ post.title }}
+      </h2>
     </header>
 
     <article v-if="post" class="mx-auto text-base prose dark:prose-invert text-lg">

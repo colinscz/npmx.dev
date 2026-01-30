@@ -22,7 +22,6 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <!-- TODO: Width is currently being constrained -->
   <article
     class="group card-interactive relative focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-bg focus-within:ring-offset-2 focus-within:ring-fg/50"
   >
