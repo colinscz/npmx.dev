@@ -83,7 +83,6 @@ import {
   FilterPanel,
   HeaderAccountMenu,
   InstallCommandTerminal,
-  JsrBadge,
   LicenseDisplay,
   LoadingSpinner,
   MarkdownText,
@@ -116,14 +115,12 @@ import {
   SearchBox,
   SearchSuggestionCard,
   Toggle,
-  UserCombobox,
   VersionSelector,
   ViewModeToggle,
 } from '#components'
 
 // Server variant components must be imported directly to test the server-side render
 // The #components import automatically provides the client variant
-import AuthButtonServer from '~/components/AuthButton.server.vue'
 import HeaderAccountMenuServer from '~/components/HeaderAccountMenu.server.vue'
 import ToggleServer from '~/components/Toggle.server.vue'
 
@@ -245,24 +242,6 @@ describe('component accessibility audits', () => {
     it('should have no accessibility violations with custom text', async () => {
       const component = await mountSuspended(LoadingSpinner, {
         props: { text: 'Fetching data...' },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-  })
-
-  describe('JsrBadge', () => {
-    it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(JsrBadge, {
-        props: { url: 'https://jsr.io/@std/fs' },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-
-    it('should have no accessibility violations in compact mode', async () => {
-      const component = await mountSuspended(JsrBadge, {
-        props: { url: 'https://jsr.io/@std/fs', compact: true },
       })
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
@@ -715,31 +694,6 @@ describe('component accessibility audits', () => {
           tree: mockTree,
           currentPath: 'src/index.ts',
           baseUrl: '/code/vue',
-        },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-  })
-
-  describe('UserCombobox', () => {
-    it('should have no accessibility violations', async () => {
-      const component = await mountSuspended(UserCombobox, {
-        props: {
-          suggestions: ['user1', 'user2', 'user3'],
-          label: 'Select a user',
-        },
-      })
-      const results = await runAxe(component)
-      expect(results.violations).toEqual([])
-    })
-
-    it('should have no accessibility violations when disabled', async () => {
-      const component = await mountSuspended(UserCombobox, {
-        props: {
-          suggestions: ['user1', 'user2'],
-          disabled: true,
-          label: 'Select a user',
         },
       })
       const results = await runAxe(component)

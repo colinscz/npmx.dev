@@ -27,8 +27,6 @@ const SKIPPED_COMPONENTS: Record<string, string> = {
   'OgImage/Package.vue': 'OG Image component - server-rendered image, not interactive UI',
 
   // Client-only components with complex dependencies
-  'AuthButton.client.vue':
-    'Client component with AuthModal dependency - AuthButton.server.vue tested',
   'AuthModal.client.vue': 'Complex auth modal with navigation - requires full app context',
 
   // Complex components requiring full app context or specific runtime conditions
