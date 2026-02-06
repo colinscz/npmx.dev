@@ -83,9 +83,6 @@ importers:
       '@nuxtjs/i18n':
         specifier: 10.2.1
         version: 10.2.1(@upstash/redis@1.36.1)(@vercel/kv@3.0.0)(@vue/compiler-dom@3.5.27)(db0@0.3.4(better-sqlite3@12.6.2))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.2)(magicast@0.5.2)(rollup@4.57.0)(vue@3.5.27(typescript@5.9.3))
-      '@resvg/resvg-js':
-        specifier: 2.6.2
-        version: 2.6.2
       '@shikijs/langs':
         specifier: 3.21.0
         version: 3.21.0
