@@ -28,16 +28,16 @@
     "updating": "(aggiornando...)",
     "no_results": "Nessun pacchetto trovato per \"{query}\"",
     "title": "cerca",
-    "title_search": "cerca: {search}",
-    "title_packages": "cerca pacchetti",
-    "meta_description": "Risultati di ricerca per '{search}'",
-    "meta_description_packages": "Cerca pacchetti npm",
     "not_taken": "{name} è disponibile",
     "claim_prompt": "Ottieni il nome di questo pacchetto su npm",
     "claim_button": "Ottieni \"{name}\"",
     "want_to_claim": "Vuoi ottenere il nome di questo pacchetto?",
     "start_typing": "Inizia a scrivere per cercare i pacchetti",
     "exact_match": "esatto",
+    "title_search": "cerca: {search}",
+    "title_packages": "cerca pacchetti",
+    "meta_description": "Risultati di ricerca per '{search}'",
+    "meta_description_packages": "Cerca pacchetti npm",
     "suggestion": {
       "user": "utente",
       "org": "organizzazione",
@@ -57,10 +57,6 @@
     "open_menu": "Apri menu",
     "links": "Link",
     "tap_to_search": "Tocca per cercare"
-  },
-  "blog": {
-    "title": "Blog",
-    "author": {}
   },
   "settings": {
     "title": "impostazioni",
@@ -189,11 +185,6 @@
       "fund": "finanzia",
       "compare": "confronta"
     },
-    "likes": {},
-    "docs": {
-      "not_available": "Documenti non disponibili",
-      "not_available_detail": "Non abbiamo potuto generare i documenti per questa versione."
-    },
     "get_started": {
       "title": "Inizia",
       "pm_label": "Gestore di pacchetti",
@@ -221,6 +212,17 @@
         "warning": "Avvertenza",
         "caution": "Cautela"
       }
+    },
+    "provenance_section": {
+      "title": "Provenienza",
+      "built_and_signed_on": "Costruito e firmato su {provider}",
+      "view_build_summary": "Visualizza riepilogo della compilazione",
+      "source_commit": "Commit di origine",
+      "build_file": "File di compilazione",
+      "public_ledger": "Registro pubblico",
+      "transparency_log_entry": "Voce del registro di trasparenza",
+      "view_more_details": "Visualizza più dettagli",
+      "error_loading": "Impossibile caricare i dettagli della provenienza"
     },
     "provenance_section": {
       "title": "Provenienza",
@@ -629,18 +631,6 @@
     },
     "file_path": "Percorso del file"
   },
-  "badges": {
-    "provenance": {
-      "verified": "verificato",
-      "verified_title": "Provenienza verificata",
-      "verified_via": "Verificato: pubblicato tramite {provider}",
-      "view_more_details": "Visualizza più dettagli"
-    },
-    "jsr": {
-      "title": "disponibile anche su JSR",
-      "label": "jsr"
-    }
-  },
   "filters": {
     "title": "Filtri",
     "search": "Cerca",
@@ -754,6 +744,18 @@
       "no_packages": "Nessun pacchetto trovato"
     }
   },
+  "badges": {
+    "provenance": {
+      "verified": "verificato",
+      "verified_title": "Provenienza verificata",
+      "verified_via": "Verificato: pubblicato tramite {provider}",
+      "view_more_details": "Visualizza più dettagli"
+    },
+    "jsr": {
+      "title": "disponibile anche su JSR",
+      "label": "jsr"
+    }
+  },
   "about": {
     "title": "Info",
     "heading": "info",
@@ -854,6 +856,111 @@
       "error": "Impossibile caricare le organizzazioni",
       "empty": "Nessuna organizzazione trovata",
       "view_all": "Visualizza tutto"
+    }
+  },
+  "compare": {
+    "packages": {
+      "title": "confronta pacchetti",
+      "tagline": "confronta i pacchetti npm fianco a fianco per aiutarti a scegliere quello giusto.",
+      "meta_title": "Confronta {packages} - npmx",
+      "meta_title_empty": "Confronta pacchetti - npmx",
+      "meta_description": "Confronto fianco a fianco di {packages}",
+      "meta_description_empty": "Confronta i pacchetti npm fianco a fianco",
+      "section_packages": "Pacchetti",
+      "section_facets": "Sfaccettature",
+      "section_comparison": "Confronto",
+      "loading": "Caricamento dati del pacchetto...",
+      "error": "Impossibile caricare i dati del pacchetto. Riprova.",
+      "empty_title": "Seleziona pacchetti da confrontare",
+      "empty_description": "Cerca e aggiungi almeno 2 pacchetti sopra per vedere un confronto fianco a fianco delle loro metriche."
+    },
+    "selector": {
+      "search_label": "Cerca pacchetti",
+      "search_first": "Cerca un pacchetto...",
+      "search_add": "Aggiungi un altro pacchetto...",
+      "searching": "Cercando...",
+      "remove_package": "Rimuovi {package}",
+      "packages_selected": "{count}/{max} pacchetti selezionati.",
+      "add_hint": "Aggiungi almeno 2 pacchetti da confrontare.",
+      "loading_versions": "Caricamento versioni...",
+      "select_version": "Seleziona versione"
+    },
+    "facets": {
+      "group_label": "Sfaccettature di confronto",
+      "all": "tutto",
+      "none": "niente",
+      "coming_soon": "Prossimamente",
+      "select_all": "Seleziona tutte le sfaccettature",
+      "deselect_all": "Deseleziona tutte le sfaccettature",
+      "select_category": "Seleziona tutte le sfaccettature {category}",
+      "deselect_category": "Deseleziona tutte le sfaccettature {category}",
+      "binary_only_tooltip": "Questo pacchetto espone binari e nessuna esportazione",
+      "categories": {
+        "performance": "Prestazioni",
+        "health": "Salute",
+        "compatibility": "Compatibilità",
+        "security": "Sicurezza e conformità"
+      },
+      "items": {
+        "packageSize": {
+          "label": "Dimensione del pacchetto",
+          "description": "Dimensione del pacchetto stesso (non compattato)"
+        },
+        "installSize": {
+          "label": "Dimensione installazione",
+          "description": "Dimensione totale di installazione incluse tutte le dipendenze"
+        },
+        "dependencies": {
+          "label": "Dipendenze dirette",
+          "description": "Numero di dipendenze dirette"
+        },
+        "totalDependencies": {
+          "label": "Dipendenze totali",
+          "description": "Numero totale di dipendenze incluse quelle transitive"
+        },
+        "downloads": {
+          "label": "Download/settimana",
+          "description": "Conteggio download settimanale"
+        },
+        "lastUpdated": {
+          "label": "Pubblicato",
+          "description": "Quando è stata pubblicata questa versione"
+        },
+        "deprecated": {
+          "label": "Deprecato?",
+          "description": "Se il pacchetto è deprecato"
+        },
+        "engines": {
+          "label": "Engine",
+          "description": "Requisiti della versione Node.js"
+        },
+        "types": {
+          "label": "Tipi",
+          "description": "Definizioni di tipo TypeScript"
+        },
+        "moduleFormat": {
+          "label": "Formato modulo",
+          "description": "Supporto ESM/CJS"
+        },
+        "license": {
+          "label": "Licenza",
+          "description": "Licenza del pacchetto"
+        },
+        "vulnerabilities": {
+          "label": "Vulnerabilità",
+          "description": "Vulnerabilità di sicurezza note"
+        }
+      },
+      "values": {
+        "any": "Qualsiasi",
+        "none": "Nessuno",
+        "unknown": "Sconosciuto",
+        "deprecated": "Deprecato",
+        "not_deprecated": "No",
+        "types_included": "Incluso",
+        "types_none": "Nessuno",
+        "vulnerabilities_summary": "{count} ({critical}C/{high}H)"
+      }
     }
   },
   "compare": {
