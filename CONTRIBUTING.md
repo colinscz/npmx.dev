@@ -43,6 +43,7 @@ This focus helps guide our project decisions as a community and what we choose t
 - [RTL Support](#rtl-support)
 - [Localization (i18n)](#localization-i18n)
   - [Approach](#approach)
+  - [i18n commands](#i18n-commands)
   - [Adding a new locale](#adding-a-new-locale)
   - [Update translation](#update-translation)
   - [Adding translations](#adding-translations)
@@ -380,6 +381,17 @@ npmx.dev uses [@nuxtjs/i18n](https://i18n.nuxtjs.org/) for internationalization.
 - We use the `no_prefix` strategy (no `/en-US/` or `/fr-FR/` in URLs)
 - Locale preference is stored in cookies and respected on subsequent visits
 
+### i18n commands
+
+The following scripts help manage translation files. `en.json` is the reference locale.
+
+| Command                        | Description                                                                                                                                                                             |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm i18n:check [locale]`     | Compares `en.json` with other locale files. Shows missing and extra keys. Optionally filter output by locale (e.g. `pnpm i18n:check ja-JP`).                                            |
+| `pnpm i18n:check:fix [locale]` | Same as check, but adds missing keys to other locales with English placeholders.                                                                                                        |
+| `pnpm i18n:report`             | Audits translation keys against code usage in `.vue` and `.ts` files. Reports missing keys (used in code but not in locale), unused keys (in locale but not in code), and dynamic keys. |
+| `pnpm i18n:report:fix`         | Removes unused keys from `en.json` and all other locale files.                                                                                                                          |
+
 ### Adding a new locale
 
 We are using localization using country variants (ISO-6391) via [multiple translation files](https://i18n.nuxtjs.org/docs/guide/lazy-load-translations#multiple-files-lazy-loading) to avoid repeating every key per country.
@@ -423,25 +435,7 @@ Check [Pluralization rule callback](https://vue-i18n.intlify.dev/guide/essential
 We track the current progress of translations with [Lunaria](https://lunaria.dev/) on this site: https://i18n.npmx.dev/
 If you see any outdated translations in your language, feel free to update the keys to match the English version.
 
-In order to make sure you have everything up-to-date, you can run:
-
-```bash
-pnpm i18n:check <country-code>
-```
-
-For example to check if all Japanese translation keys are up-to-date, run:
-
-```bash
-pnpm i18n:check ja-JP
-```
-
-To automatically add missing keys with English placeholders, use `--fix`:
-
-```bash
-pnpm i18n:check:fix fr-FR
-```
-
-This will add missing keys with `"EN TEXT TO REPLACE: {english text}"` as placeholder values, making it easier to see what needs translation.
+Use `pnpm i18n:check` and `pnpm i18n:check:fix` to verify and fix your locale (see [i18n commands](#i18n-commands) above for details).
 
 #### Country variants (advanced)
 
@@ -529,6 +523,32 @@ See how `es`, `es-ES`, and `es-419` are configured in [config/i18n.ts](./config/
 - Use `common.*` for shared strings (loading, retry, close, etc.)
 - Use component-specific prefixes: `package.card.*`, `settings.*`, `nav.*`
 - Do not use dashes (`-`) in translation keys; always use underscore (`_`): e.g., `privacy_policy` instead of `privacy-policy`
+- **Always use static string literals as translation keys.** Our i18n scripts (`pnpm i18n:report`) rely on static analysis to detect unused and missing keys. Dynamic keys cannot be analyzed and will be flagged as errors.
+
+  **Bad:**
+
+  ```vue
+  <!-- Template literal -->
+  <p>{{ $t(`package.tabs.${tab}`) }}</p>
+
+  <!-- Variable -->
+  <p>{{ $t(myKey) }}</p>
+  ```
+
+  **Good:**
+
+  ```typescript
+  const { t } = useI18n()
+
+  const tabLabels = computed(() => ({
+    readme: t('package.tabs.readme'),
+    versions: t('package.tabs.versions'),
+  }))
+  ```
+
+  ```vue
+  <p>{{ tabLabels[tab] }}</p>
+  ```
 
 ### Using i18n-ally (recommended)
 
